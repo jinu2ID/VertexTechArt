@@ -120,11 +120,16 @@ vector<int> GetUserVector5()
 	return numbers;
 }
 
-void GetMinAndMax(vector<int> numbers)
+int GetMinNumber(vector<int> numbers)
 {
-	sort(numbers.begin(), numbers.end()); // Sort the vector to find min and max
-	cout << "The smallest number is: " << numbers.front() << endl;
-	cout << "The largest number is: " << numbers.back() << endl;
+	sort(numbers.begin(), numbers.end());
+	return numbers.front();
+}
+
+int GetMaxNumber(vector<int> numbers)
+{
+	sort(numbers.begin(), numbers.end());
+	return numbers.back();
 }
 
 void SearchVector(vector<int> numbers)
@@ -137,8 +142,62 @@ void SearchVector(vector<int> numbers)
 		cout << "The number " << search_number << " is not in the vector." << endl;
 }
 
+vector<int> MultiplyEvenIndicesBy2(vector<int> numbers)
+{
+	for (int i = 0; i < numbers.size(); i += 2) // Iterate every 2 items
+	{
+		numbers[i] *= 2;
+	}
+
+	return numbers;
+}
+
+void PrintReversedVectors(const vector<int> numbers)
+{
+	cout << "Reversed vector: ";
+	for (int i = numbers.size()-1; i >= 0; i--)
+	{
+		cout << numbers[i] << " ";
+	}
+	cout << endl;
+}
+
+void CalculateSquareMeters()
+{
+	int width = 0, height = 0, total_square_meters = 0;
+	while (true)
+	{
+		cout << "Please enter a width (Press 0 to exit): ";
+		width = GetUserInt("number");
+
+		if (width == 0)
+			break;
+
+		cout << "Please enter a height (Press 0 to exit): ";
+		height = GetUserInt("number");
+
+		if (height == 0)
+			break;
+
+		if (width < 0 or height < 0)
+		{
+			cout << "Width and height must be positive integers" << endl;
+			break;
+		}
+
+		int square_meters = width * height;
+		cout << "The area of this room is : " << square_meters << " square meters." << endl;
+		total_square_meters += square_meters;
+	}
+
+	if (total_square_meters > 0)
+		cout << "The total area of the house is: " << total_square_meters << " square meters." << endl;
+}
+
+
 int main()
 {
+	// PART 1
 	//	1.  Ask for the name and age of a user-- - print to console
 	GetUserNameAndAge();
 
@@ -148,7 +207,7 @@ int main()
 
 	// 2b.  Km - Miles -- print to the console
 	ConvertKilometersToMiles();
-	
+
 	// 2c.  Pounds - Kgs -- print to the console
 	ConvertPoundsToKilograms();
 
@@ -158,21 +217,67 @@ int main()
 
 	/* 3. Create a vector of 4 float numbers
 		a.Computer the average of the 4 numbers and print it.*/
+	cout << "\nAverage of 4 float numbers:" << endl;
 	CalculateAvgVector4();
 
-	
+
 	// 4.  Ask the user to input 5 integers and store them in a vector(Do this one after week 2 !!)
+	cout << "\nWorking with a vector of 5 integers:" << endl;
 	vector<int> user_numbers = GetUserVector5();
 
 	// 4a.Print the sum of all the integers(acc***)
 	cout << "The sum of the entered numbers is: " << accumulate(user_numbers.begin(), user_numbers.end(), 0) << endl;
 
 	// 4b.Largest and Smallest number in the vector(*...)
-	GetMinAndMax(user_numbers);
+	cout << "The largest number is: " << GetMaxNumber(user_numbers) << endl;
+	cout << "The smallest number is: " << GetMinNumber(user_numbers) << endl;
 
 	// 4c.Ask the user for a number - search it to see if its in the vector()
 	SearchVector(user_numbers);
 
+
+
+	// PART 2
+	// 1. Ask the user to input 5 integers and store them in a vector
+	cout << "\nPart 2" << endl;
+	cout << "Working with a vector of 5 integers again:" << endl;
+	vector<int> user_numbers_2 = GetUserVector5();
+
+	// 1a/1b. Get the highest number in the vector
+	cout << "The largest number is: " << GetMaxNumber(user_numbers_2) << endl;
+
+
+	// 2. Ask the user for a number input until the user presses 0
+	// Iterate every 2 items of the Vector and multiply it by 2
+	// print out the numbers
+	cout << "\nWorking with a vector of integers with every 2nd item multiplied by 2:" << endl;
+	vector<int> user_numbers_3;
+	while (true)
+	{
+		cout << "Please enter a number (Press 0 to exit): ";
+		int user_input = GetUserInt("number");
+
+		if (user_input == 0)
+			break;
+		else
+			user_numbers_3.push_back(user_input);
+	}
+
+	vector<int> modified_numbers = MultiplyEvenIndicesBy2(user_numbers_3);
+	cout << "Here is your vector with every 2nd item multiplied by 2: ";
+	for (int num : modified_numbers)
+	{
+		cout << num << " ";
+	}
+	cout << endl;
+
+	// 3. Do a reverse loop and print out the results
+	cout << "\nReversed vector of modified numbers:" << endl;
+	PrintReversedVectors(modified_numbers);
+
+	// 4. Input a Width and Height and return square meters
+	cout << "\nCalculating square meters of rooms:" << endl;
+	CalculateSquareMeters();
 
 	cout << "Press Enter to exit..." << endl;
 	char end = cin.get(); // clear any new lines
